@@ -1,0 +1,423 @@
+body, header,h1, h2, h3, p, ul, ol, button input div icon canvas textarea {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #333;
+    color: white;
+    padding: 10px 15px;
+}
+
+#togglePanel {
+    cursor: pointer;
+}
+
+@media (min-width: 768px) { 
+    header {
+        display: none; /* Hide header on screens larger than 768px */
+    }
+}
+
+
+
+
+.full-container {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 90vh;
+    background: #e3e4e5;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.calcu-chat {
+    width: 300px; /* Set width to 300px */
+    height: 400px; /* Set height to 400px */
+    margin: 50px auto;
+    padding: 8px; /* Adjust padding */
+    background: #121212 ; /* Steel Blue gradient */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Creates 5 equal-width columns */   
+    grid-template-rows: 1fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr; /* 8 equal rows */ 
+    grid-template-areas:
+    "tabs tabs tabs tabs tabs"
+    "template template template template template"
+    "template template template template template"
+    "template template template template template"
+    "template template template template template"
+    "template template template template template"
+    "template template template template template"
+    "template template template template template";
+    
+    /*gap: 10px; /* Optional: adds spacing between the grid items */
+}
+
+@media (max-width: 768px) {
+    .calcu-chat {
+        display: none; /* Hide the panel */
+    }
+    body {        
+        align-items: flex-start;
+        width: 100%;    
+    }
+    header {
+        display: block;
+    }
+    .full-container {
+        width: 100%;        
+    }
+}
+
+.tab-content-container {
+    grid-area: template;
+
+}
+
+.calculator {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Creates 5 equal-width columns */   
+    grid-template-rows: repeat(7, 1fr); /* 8 equal rows */ 
+    grid-template-areas:    
+    "displays displays displays displays displays"
+    "keys keys keys keys nav"
+    "keys keys keys keys nav"
+    "keys keys keys keys nav"
+    "keys keys keys keys nav"
+    "keys keys keys keys nav"
+    "chat chat chat chat chat";
+}
+
+/*.tabs {
+    grid-area: tabs;
+    column-gap: 4px;
+    background-color:#486c89;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+}*/
+
+.tabs {
+    grid-area: tabs;
+    display: flex;    
+    padding-top: 4px;
+    padding-bottom: 4px;
+    justify-content: space-evenly;
+    background-color:#121212;
+}
+
+.tab-button {
+    /*padding: 10px 20px;
+    margin: 0 5px;*/    
+    background-color:#C0C0C0;
+    /*border: 2 px;*/
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    border-color:  #C72626;
+}
+
+.tab-button.active {
+    background-color: black; /* Highlight active tab */
+    color: white;
+}
+
+.tab-button:hover {
+    background-color: #ddd;
+}
+
+/* Hide non-active tab content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Additional styling for the tab content */
+/*.tab-content h2 {
+    text-align: center;
+    margin-top: 20px;
+}*/
+
+
+/*.tab-button {
+    padding: 10px 16px;
+    margin: 0 5px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}*/
+
+.tab-icon {
+    width: 24px; /* Adjust icon size */
+    height: 24px;
+     /* Space between icon and text */
+}
+
+/*.tab-button.active {
+    background-color: #4682B4;
+    color: white;
+}
+
+.tab-button:hover {
+    background-color: #ddd;
+}*/
+
+.display-container {
+    grid-area: displays;
+    background-color:#121212 ;
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.6), 
+                inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.display {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    /*border-radius: 5px;*/
+    background-color: #212121;
+    margin-bottom: -2px; /* Overlapping displays to seem as one */
+    text-align: right;
+    outline: none;    
+    box-shadow: none;
+    color: white;
+}
+
+.display:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.display:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;    
+}
+
+.keys {
+    grid-area: keys;
+    background-color: #121212;
+    display: grid;    
+    grid-template-columns: 1fr 1fr 1.25fr 1fr ; /* Creates 4 equal-width columns */   
+    grid-template-rows: 1fr 1.2fr 1.2fr 1.2fr; /* 5 equal rows */ 
+    grid-template-areas:
+    "operation-hor operation-hor operation-hor operation-hor"
+    "number number number operation-ver"
+    "number number number operation-ver"
+    "number number number operation-ver"
+    "number number number operation-ver";
+}
+
+.operation-hor {
+    grid-area: operation-hor;
+    display: grid;    
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+    "caret root beginblock endblock comma clear";
+}
+
+#caret { grid-area: caret; }
+#root { grid-area: root; }
+#beginblock { grid-area: beginblock; }
+#endblock { grid-area: endblock; }
+#comma { grid-area: comma; }
+#clear { grid-area: clear; }
+
+.basic-number {
+    grid-area: number;
+    display: grid;
+    /*justify-content: center;
+    align-items: center;*/
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+    "seven eight nine erase"
+    "four five six exp"
+    "one two three negative"
+    "rational zero dot equal"
+}   
+
+#seven { grid-area: seven; }
+#eight { grid-area: eight; }
+#nine { grid-area: nine; }
+#erase { grid-area: erase; }
+#four { grid-area: four; }
+#five { grid-area: five; }
+#six { grid-area: six; }
+#E10 { grid-area: exp; }
+#one { grid-area: one; }
+#two { grid-area: two; }
+#three { grid-area: three; }
+#negative { grid-area: negative; }
+#zero { grid-area: zero; }
+#dot { grid-area: dot; }
+#rational { grid-area: rational; }
+#equal { grid-area: equal; }
+
+
+.btn-key-basic {    
+    width: 40px;
+    height: 38px;
+    margin: auto;    
+    border-radius: 8px;
+    border-color: (255, 255, 255, 0.1);
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+.operation-ver {
+    grid-area: operation-ver;
+    display: grid;
+    /*justify-content: center;
+    align-items: center;*/    
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+    "slash record"
+    "star voice"
+    "minus variable"
+    "plus newkeyboard";
+}
+
+#slash { grid-area: slash; }
+#star { grid-area: star; }
+#minus { grid-area: minus; }
+#plus { grid-area: plus; }
+#record { grid-area: record;
+    background-color: #C0C0C0 ;
+   }
+#voice {grid-area: voice;
+    background-color: #C0C0C0 ;}
+#variable {grid-area: variable;
+    background-color: #C0C0C0 ;}
+#newkeyboard {grid-area: newkeyboard;
+    background-color: #C0C0C0 ;}
+
+.operation {
+    width: 40px;
+    height: 38px;
+    margin: auto;    
+    border-radius: 8px;
+    border-color: (255, 255, 255, 0.1);
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+.next-key {    
+    height: 38px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 2px;
+    border-radius: 4px;    
+}
+
+.nav-bar {
+    grid-area: nav;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #121212;    
+}
+
+.carousel-container {
+    overflow: hidden;
+    flex-grow: 1;
+    
+}
+
+.carousel-items {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.carousel-items button {    
+    border-color: (255, 255, 255, 0.1);
+    background-color:#C0C0C0;
+    color: #FFFFFF;
+    width: 40px;
+    height: 38px;
+    border: #CDAA7D;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.carousel-nav {
+    background-color: black;
+    width: 100%;
+    height: 20px;    
+    border: none;    
+    cursor: pointer;
+    color: #C0C0C0;
+    font-size: 18px;
+    border-radius: 5px;
+    border-color: (255, 255, 255, 0.1);
+}
+
+.calculatorchat-input-box {
+    grid-area: chat; 
+    display: flex;
+    align-items: stretch;
+    padding: 4px;
+    background: #181818; 
+    
+}
+
+.calculatorchat-send-button {    
+    /*color: rgb(18, 22, 147);
+    border: none;
+    cursor: pointer;*/
+    background: #444; /* Dark Gray */
+    color: #E5E4E2; /* Platinum */
+    border: none;    
+    border-radius: 6px;    
+    cursor: pointer;
+    transition: background 0.3s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6),
+                -2px -2px 5px rgba(255, 255, 255, 0.1);
+
+}
+
+#calculatorchat-message-input {
+    flex-grow: 1;    
+    border: 1px solid #E5E4E2;
+    border-radius: 6px;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: inline;
+}

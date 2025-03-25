@@ -1,0 +1,96 @@
+.chat-container {
+    width: 100%;
+    height: 100%; /* Ensure the chat container takes full height of the viewport */    
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    grid-template-rows: repeat(9, 1fr);
+    grid-template-areas: 
+    "chatcontent chatcontent chatcontent chatcontent chatcontent chatcontent"
+    "chatcontent chatcontent chatcontent chatcontent chatcontent chatcontent"
+    "chatcontent chatcontent chatcontent chatcontent chatcontent chatcontent"
+    "chatcontent chatcontent chatcontent chatcontent chatcontent chatcontent"
+    "chatcontent chatcontent chatcontent chatcontent chatcontent chatcontent"
+    "chatcontent chatcontent chatcontent chatcontent chatcontent chatcontent"
+    "chatcontent chatcontent chatcontent chatcontent chatcontent chatcontent"
+    "chatcontent chatcontent chatcontent chatcontent chatcontent chatcontent"
+    "chatinput chatinput chatinput chatinput chatinput chatinput";
+    
+}
+
+.chat-box {
+    min-height: 300px;
+    grid-area: chatcontent;
+    padding: 4px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-bubble {
+    margin-bottom: 2px;
+    padding: 2px;
+    border-radius: 2px;
+    background-color: #e0e0e0;
+    max-width: 80%;
+    word-wrap: break-word;
+    display: inline-block;
+}
+
+.chat-bubble.sent {
+    background-color:#FF8C00;
+    align-self: flex-end;
+}
+
+.chat-bubble.received {
+    background-color: #74c0eb;
+    align-self: flex-start;
+}
+
+
+.chat-input-box {
+    grid-area: chatinput;   
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    background: #444;
+    border-top: 1px solid #ccc;
+}
+
+.chat-input-box input[type="text"] {
+    flex-grow: 1;
+    padding: 2px;
+    margin-right: 2px;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+}
+
+#chat-send-button, #load-json-button {    
+    padding: 2px;
+    margin-left: 2px;
+    border-radius: 2px;
+    border:none;
+    background-color: #C0C0C0;
+    color: black;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#chat-send-button:hover {
+    background-color: #0b93f6;
+}
+
+.chat-input-box input[type="file"] {    
+    display: none;
+}
+
+.chat-box img, svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}

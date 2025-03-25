@@ -1,0 +1,81 @@
+.graph-container {
+    display:grid;
+    border: 1px solid #000;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(6, 1fr); 
+    grid-template-rows: repeat(9, 1fr);
+    grid-template-areas: 
+    "canvascontent canvascontent canvascontent canvascontent canvascontent canvascontent"
+    "canvascontent canvascontent canvascontent canvascontent canvascontent canvascontent"
+    "canvascontent canvascontent canvascontent canvascontent canvascontent canvascontent"
+    "canvascontent canvascontent canvascontent canvascontent canvascontent canvascontent"
+    "canvascontent canvascontent canvascontent canvascontent canvascontent canvascontent"
+    "canvascontent canvascontent canvascontent canvascontent canvascontent canvascontent"
+    "canvascontent canvascontent canvascontent canvascontent canvascontent canvascontent"
+    "canvascontent canvascontent canvascontent canvascontent canvascontent canvascontent"   
+    "command command command command command command";
+}
+.graph-top-panel {
+    grid-area: canvascontent;
+    padding: 4px;
+    border-right: 1px solid #000;
+}
+
+.graph-bottom-panel {
+    grid-area: command;
+    width: 100%;
+    display: grid;
+    grid-template-areas: 
+    "buttons"
+    "limits";
+    justify-content: center;
+    align-items: center;
+    /*position: relative;*/
+}
+
+.graph-canvas {
+    width: 100%;
+    height: 100%;
+    color: black;
+    background: white;
+    border: 1px solid #000;
+}
+
+#graph-buttons {
+    grid-area: buttons;
+    background-color: black;
+}
+
+#graph-bottombar {
+    grid-area: limits;
+    width: 100%;
+    display: flex;
+    padding: 4px;
+    background: #fff;
+    border-top: 1px solid #ccc;
+}
+
+#graph-input{
+    flex: 1;
+    padding: 4px;
+    border: 1px solid #C72626;
+    border-radius: 2px;
+    font-size: 14px;
+}
+
+.button-graph {
+    background: #444;
+    color:#E5E4E2;
+    border-radius: 2px;
+}
+
+#graph-sendbutton{
+    margin-left: 4px;
+    padding: 4px 4px;
+    border: none;
+    background: #444;
+    color:#E5E4E2;
+    border-radius: 2px;
+    cursor: pointer;
+}

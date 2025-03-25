@@ -1,0 +1,10 @@
+export const sharedArray = [];   
+export const calculatorTokensArray = [];     
+export const userFunctionTokensArray = [];   
+export const userFunctionParameters = [];  
+export const functionsParameterStringMap = new Map();    
+export const resultStore = [];   
+export const tokensJsonFile = [];    
+export const variableStorage = [];   
+export const storedVariableMap =  new Map();  
+export const tokensJsonHistory = [];     

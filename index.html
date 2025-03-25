@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Calculator</title>
+    <link rel="stylesheet" href="./Styles/mainStyle.css">
+    <link rel="stylesheet" href="./Styles/chatPanelStyles.css">
+    <link rel="stylesheet" href="./Styles/editStyles.css">
+    <link rel="stylesheet" href="./Styles/chatStyles.css">
+    <link rel="stylesheet" href="./Styles/graphStyles.css">
+    <link rel="stylesheet" href="./Styles/functionsStyle.css">
+</head>
+<body>
+    <header>
+        <button id="togglePanel">☰ view</button>        
+    </header>
+    <div class="full-container">       
+        <div class="chat-panel" id="chat-panel">
+            <div id="chat-panel-box" class="chat-panel-box">
+                <!-- Messages will appear here -->
+            </div>
+            <div class="chat-panel-input-box">
+                <textarea id="chat-panel-input" placeholder="check your voice message..." rows="1"></textarea>
+                <div class="button-container">
+                    <button id="chat-panel-send-button">Send</button>
+                    <button id="panel-load-json-button">Load</button>
+                    <input type="file" id="panel-json-input" accept=".json" capture="filesystem" style="display: none;" />
+                </div>
+                
+            </div>
+        </div>
+        <div class="calcu-chat" id="calcu-chat">
+            <div class="tabs">            
+                <button class="tab-button" id="calculator-tab" data-value="calculator">
+                    <img src="icons/calculator.svg" alt="Calculator Icon" class="tab-icon" data-value="calculator">
+                </button>
+                <button class="tab-button" id="edit-tab" data-value="edit">
+                    <img src="icons/edit.svg" alt="Edit Icon" class="tab-icon" data-value="edit">
+                </button>
+                <button class="tab-button" id="graph-tab" data-value="graph">
+                    <img src="icons/graph.svg" alt="Graph Icon" class="tab-icon" data-value="graph">
+                </button>
+                <button class="tab-button" id="chat-tab" data-value="chat">
+                    <img src="icons/chat.svg" alt="Chat Icon" class="tab-icon" data-value="chat">
+                </button>
+                <button class="tab-button" id="functions-tab" data-value="functions">
+                    <img src="icons/functions.svg" alt="functions Icon" class="tab-icon" data-value="functions">
+                </button>          
+            </div>
+            <div id="tab-content" class="tab-content-container">
+                <!-- This will hold the dynamically loaded content -->
+            </div>
+        </div>
+    </div> 
+    
+    <!-- HTML Templates for each tab -->
+    <template id="calculator-template">
+        <div class="calculator">
+        <!-- Your calculator HTML structure here -->
+            <div class="display-container">
+                <input type="text" class="display" id="input-display" readonly>
+                <input type="text" class="display" id="result-display" readonly>
+                <input type="text" class="display" id="message-display" readonly>
+            </div>
+            <div class="keys">
+                <div class="operation-hor">
+                    <button id="clear" class="operation">C</button>
+                    <button id="beginblock" class="operation basic-key" data-value="( BEGINBLOCK sin BEGINFUNCTION">(</button>                    
+                    <button id="endblock" class="operation basic-key" data-value=") ENDBLOCK cos BEGINFUNCTION">)</button>
+                    <button id="caret" class="operation basic-key" data-value="^ EXPONENTIATION tan BEGINFUNCTION">^</button>
+                    <button id="root" class="operation basic-key" data-value="√ ROOT log BEGINFUNCTION">√</button>
+                    <button id="comma" class="operation basic-key" data-value=", COMMA ln BEGINFUNCTION">,</button>                    
+                    
+                </div>
+                <div class="basic-number">
+                    <button id="seven" class="btn-key-basic basic-key" data-value="7 NUMBER exp BEGINFUNCTION">7</button>
+                    <button id="eight" class="btn-key-basic basic-key" data-value="8 NUMBER pow BEGINFUNCTION">8</button>
+                    <button id="nine" class="btn-key-basic basic-key" data-value="9 NUMBER max2 BEGINFUNCTION">9</button>            
+                    <button id="four" class="btn-key-basic basic-key" data-value="4 NUMBER min2 BEGINFUNCTION">4</button>
+                    <button id="five" class="btn-key-basic basic-key" data-value="5 NUMBER asin BEGINFUNCTION">5</button>
+                    <button id="six" class="btn-key-basic basic-key" data-value="6 NUMBER acos BEGINFUNCTION">6</button>                
+                    <button id="one" class="btn-key-basic basic-key" data-value="1 NUMBER atan BEGINFUNCTION">1</button>
+                    <button id="two" class="btn-key-basic basic-key" data-value="2 NUMBER sqrt BEGINFUNCTION">2</button>
+                    <button id="three" class="btn-key-basic basic-key" data-value="3 NUMBER sign BEGINFUNCTION">3</button>
+                    <button id="zero" class="btn-key-basic basic-key" data-value="0 CERO exp BEGINFUNCTION">0</button>
+                    <button id="dot" class="btn-key-basic basic-key" data-value=". POINT exp BEGINFUNCTION">.</button>
+                    <button id="rational" class="btn-key-basic basic-key" data-value="𝑿 VARIABLE x,y CALCULATOR_FUNCTION">𝑿</button>
+                    <button id="erase" class="btn-key-basic">←</button>
+                    <button id="equal" class="btn-key-basic">=</button>
+                    <button id="E10" class="btn-key-basic basic-key" data-value="E EXPONENT10 exp BEGINFUNCTION">E</button>
+                    <button id="negative" class="btn-key-basic" data-value="- NEGATIVE">-/+</button>
+                </div>
+                <div class="operation-ver">
+                    <button id="slash" class="operation basic-key" data-value="÷ OPERATION exp BEGINFUNCTION">÷</button>
+                    <button id="star" class="operation basic-key" data-value="* OPERATION exp BEGINFUNCTION">*</button>
+                    <button id="minus" class="operation basic-key" data-value="- OPERATION exp BEGINFUNCTION">-</button>
+                    <button id="plus" class="operation basic-key" data-value="+ OPERATION exp BEGINFUNCTION">+</button>
+                    <button id="record" class="next-key">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368" id="recordsvg">
+                            <path d="M480-280q83 0 141.5-58.5T680-480q0-83-58.5-141.5T480-680q-83 0-141.5 58.5T280-480q0 83 58.5 141.5T480-280Zm0 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+                        </svg>
+                       
+                    </button>
+                    <button id="voice" class="next-key">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368" id="voicesvg">
+                            <path d="M480-400q-50 0-85-35t-35-85v-240q0-50 35-85t85-35q50 0 85 35t35 85v240q0 50-35 85t-85 35Zm0-240Zm-40 520v-123q-104-14-172-93t-68-184h80q0 83 58.5 141.5T480-320q83 0 141.5-58.5T680-520h80q0 105-68 184t-172 93v123h-80Zm40-360q17 0 28.5-11.5T520-520v-240q0-17-11.5-28.5T480-800q-17 0-28.5 11.5T440-760v240q0 17 11.5 28.5T480-480Z"/>
+                        </svg>
+                    </button>
+                    <button id="variable" class="next-key">
+                        <img src="icons/variable.svg" alt="Variable Icon" class="tab-icon" data-value="variable">
+                    </button>
+                    <button id="nextkeyboard" class="next-key">
+                        <img src="icons/next.svg" alt="Next Icon" class="tab-icon visible" id="next" data-value="nextkeyboard">
+                        <img src="icons/previous.svg" alt="Previous Icon" class="tab-icon hidden" id="previous" data-value="nextkeyboard">
+                    </button>   
+                </div>                
+                
+                
+                
+                <!--                
+                
+                <button onclick="appendToDisplay('sin','BEGINFUNCTION')">sin()</button>  Added sin() key 
+                <button onclick="appendToDisplay('cos','BEGINFUNCTION')">cos()</button> Added cos() key 
+                <button onclick="appendToDisplay('abs','BEGINFUNCTION')">abs()</button> Added abs() key 
+                
+                
+                <button onclick="appendToDisplay('Maximo2Numbers', 'BEGINFUNCTION')">Max(a,b)</button>
+                <button onclick="appendToDisplay('Minimo2Numbers', 'BEGINFUNCTION')">Min(a,b)</button>
+            -->
+                
+            </div>
+            <div class="nav-bar">
+                <button class="carousel-nav up" id="carouselUp">&#9650;</button> <!-- Up button -->
+                <div class="carousel-container">
+                    <div class="carousel-items">
+                    <button class="xvariable" data-value="0"></button>
+                    <button class="xvariable" data-value="1"></button>
+                    <button class="xvariable" data-value="2"></button>
+                    <button class="xvariable" data-value="3"></button>
+                    <button class="xvariable" data-value="4"></button>
+                    <button class="xvariable" data-value="5"></button>
+                    <button class="xvariable" data-value="6"></button>
+                    <button class="xvariable" data-value="7"></button>
+                    <button class="xvariable" data-value="8"></button>
+                    <button class="xvariable" data-value="9"></button>
+                    </div>
+                </div>
+                <button class="carousel-nav down" id="carouselDown">&#9660;</button> <!-- Down button -->
+            </div>
+            
+            <div class="calculatorchat-input-box">
+                <input type="text" id="calculatorchat-message-input" placeholder="Type your message here..." />
+                <button id="calculatorchat-send-button" class="calculatorchat-send-button">Send</button>            
+            </div>
+        
+        </div>
+    </template>
+    <template id="edit-template">
+        <div class="edit-container">
+            <div class="edit-input-section">
+                <input type="text" id="equationInput" class="editTabText" placeholder="Enter a name for the equation" pattern="^[a-zA-Z_$][a-zA-Z0-9_$]*$" required>
+            </div>
+            <div class="edit-display" >
+                <input type="text" class="editTabText" id="editUserInput" readonly>
+                <input type="text" class="editTabText" id="editResultDisplay" readonly>
+                <input type="text" class="editTabText" id="editMessageDisplay" readonly>   
+            </div>
+            
+            <div id="tokensList" class="edit-tokens-list"></div>
+            <button id="applyChanges">Apply Changes</button>
+        </div>
+    </template>
+    <template id="graph-template">
+        <div class="graph-container" id="graph-container">            
+            <div class="graph-top-panel" id="graph-canvas-panel">
+                <canvas class="graph-canvas" id="graph-canvas"></canvas>
+            </div>            
+            <div class="graph-bottom-panel" id="graph-buttons-panel">
+                <div id="graph-buttons">
+                    <button id="clear-graph" class="button-graph">Clear</button>
+                    <button id="plot-graph" class="button-graph">Plot</button>
+                    <input type="file" id="imageLoader" accept="image/*" style="display: none;"/>
+                    <button id="load-image" class="button-graph">Load</button>
+                    <button id="save-canvas" class="button-graph">Save</button>
+                    <button id="free-draw" class="button-graph">Draw</button>
+                </div>                
+                <div id="graph-bottombar">
+                    <input type="text" id="graph-input" placeholder="Enter Limits: xMin, xMax, yMin, yMax" autocomplete="off" spellcheck="false" 
+                    autocorrect="off" autocapitalize="off"/>
+                    <button id="graph-sendbutton">Send</button>
+                </div>
+            </div>
+        </div>
+    </template>   
+    <template id="chat-template">
+        <div class="chat-container">
+        <div id="chat-box" class="chat-box">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="chat-input-box">
+            <input type="text" id="message-input" placeholder="Type your message here..." />
+            <button id="chat-send-button">Send</button>
+            <button id="load-json-button">Load</button>
+            <input type="file" id="json-input" accept=".json" style="display: none;" />
+        </div>
+        </div>
+    </template>
+    <template id="functions-template">
+        <div class="functions-container">
+            <!-- The divs populated from JSON will be inserted here -->
+        </div>
+    </template>
+    <script type="module" src="./modules/commonConstant.js"></script>    
+    <script type="module" src="./modules/memory.js"></script>
+    <script type="module" src="./modules/compiler.js"></script>
+    <script type="module" src="./modules/VirtualMachine.js"></script>
+    <script type="module" src="./modules/uiInterface.js"></script>
+    <script type="module" src="./modules/parseInput.js"></script>
+    <script type="module" src="./modules/CalculatorDisplay.js"></script>
+    <script type="module" src="./modules/editDisplay.js"></script>
+    <script type="module" src="./modules/calculatorApp.js"></script>
+    <script type="module" src="./modules/chatPanel.js"></script>
+    
+</body>
+</html>
